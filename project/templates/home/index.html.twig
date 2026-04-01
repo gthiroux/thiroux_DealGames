@@ -9,8 +9,14 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
+    {# <h1>Hello {{ controller_name }}! ✅</h1> #}
+    {% for ad in ads %}
+        {{ad.title}}
+        {# <img src="{{ asset('assets/images/products/' ~ ad.imageName) }}" alt="Image de {{ ad.title }}"> #}
+        {{ad.description}}
+        {{ad.publicatedDate|date('d/m/Y')}}
+        {{ad.category.name}}
+    {% endfor %}
 
 </div>
 {% endblock %}

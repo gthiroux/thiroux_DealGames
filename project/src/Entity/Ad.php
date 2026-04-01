@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AdRepository;
+use DateTime as GlobalDateTime;
 use Doctrine\DBAL\Types\Types;
 use Vich\UploaderBundle\Mapping\Attribute as Vich;
 use Doctrine\ORM\Mapping as ORM;
@@ -40,7 +41,7 @@ class Ad
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $publicated_date = null;
+    private ?\DateTime $publicated_date ;
 
     #[ORM\ManyToOne(inversedBy: 'ads', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
@@ -49,6 +50,11 @@ class Ad
     #[ORM\ManyToOne(inversedBy: 'ads')]
     #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
+
+    public function __construct()
+    {
+        $this->publicated_date = new GlobalDateTime(); 
+    }
 
     public function getId(): ?int
     {

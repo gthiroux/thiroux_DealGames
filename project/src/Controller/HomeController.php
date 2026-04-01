@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Ad;
 use App\Form\AdFormType;
 use App\Form\RegistrationFormType;
+use App\Repository\AdRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,9 +16,11 @@ final class HomeController extends AbstractController
 {
 
     #[Route('/', name: 'home')]
-    public function index():Response{
+    public function index(AdRepository $ad_repo ):Response{
+    $ads=$ad_repo->findAll();
+
     return $this->render('home/index.html.twig',[
-        ''
+        'ads'=>$ads,
     ]); 
     }
 
