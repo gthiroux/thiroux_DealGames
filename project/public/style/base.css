@@ -1,0 +1,12 @@
+:root {
+    --color_purple_pink: #a56ab0;
+    --color_dark_pink: #b06a6f;
+    --color_pink: #b06a9a;
+    --color_purple: #8e6ab0;
+    --color_light: #b098a9;
+    --white: #eeeced;
+}
+html,
+body {
+    background-color: var(--white) !important;
+}

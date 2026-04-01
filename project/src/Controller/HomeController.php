@@ -13,8 +13,16 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
-    public function index(Request $request,EntityManagerInterface $em): Response
+
+    #[Route('/', name: 'home')]
+    public function index():Response{
+    return $this->render('home/index.html.twig',[
+        ''
+    ]); 
+    }
+
+    #[Route('/create_ad', name: 'home.ad.create')]
+    public function create_ad(Request $request,EntityManagerInterface $em): Response
     {   $ad=new Ad();
         $ad_form=$this->createForm(AdFormType::class, $ad);
         $ad_form->handleRequest($request);
@@ -23,11 +31,10 @@ final class HomeController extends AbstractController
                 $ad->setUser($this->getUser());
                 $em->persist($ad);
                 $em->flush();
-                return $this->redirectToRoute('app_home');
+                return $this->redirectToRoute('home');
             }}
 
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+        return $this->render('home/ad.html.twig', [
             'ad_form'=>$ad_form,
         ]);
     }
