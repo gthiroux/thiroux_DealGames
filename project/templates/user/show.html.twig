@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User
+{% endblock %}
+
+{% block body %}
+	<h1>User</h1>
+
+	<table class="table">
+		<tbody>
+
+			<tr>
+				<th>Lastname</th>
+				<td>{{ user.lastname }}</td>
+			</tr>
+			<tr>
+				<th>Firstname</th>
+				<td>{{ user.firstname }}</td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td>{{ user.email }}</td>
+			</tr>
+			<tr>
+				<th>Date de création de compte</th>
+				<td>{{ user.registeredDate ? user.registeredDate|date('d/m/Y') : '' }}</td>
+			</tr>
+
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+	<a href="{{ path('app_logout') }}">Deconnexion</a>
+
+
+{% endblock %}
