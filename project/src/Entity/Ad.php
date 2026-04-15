@@ -97,9 +97,15 @@ class Ad
         }
     }
 
+
     public function getImageFile(): ?File
     {
         return $this->imageFile;
+    }
+
+   public function getUpdatedAt(): ?\DateTimeImmutable 
+    {
+        return $this->updatedAt;
     }
 
     public function setImageName(?string $imageName): void

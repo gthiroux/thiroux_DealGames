@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\AdRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,10 +26,11 @@ final class UserController extends AbstractController
     // * if the user isn't connected, redirect to the login's route
     #[Route(name: 'app_user_index', methods: ['GET'])]
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_USER")'))]
-    public function index(#[CurrentUser] User $user): Response
+    public function index(#[CurrentUser] User $user,): Response
     {
-        
-        return $this->render('user/show.html.twig',['user'=>$user]);
+        $ads=$user ->getAds();
+        return $this->render('user/show.html.twig',['user'=>$user,
+        'ads'=>$ads]);
     }
         
     // * if the usehas a ADMIN's role , he can see all user in database
@@ -76,7 +78,7 @@ final class UserController extends AbstractController
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager,UserPasswordHasherInterface $passwordHasher): Response
     {
-        if ($this->isGranted('ROLE_ADMIN') || $user != $this->getUser()) {
+        if (!$this->isGranted('ROLE_ADMIN') && $user != $this->getUser()) {
             throw $this->createAccessDeniedException("Vous ne pouvez pas modifier le profil d'un autre utilisateur.");
         }
         $form = $this->createForm(UserType::class, $user);
@@ -103,18 +105,21 @@ final class UserController extends AbstractController
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isGranted('ROLE_ADMIN') || $user !== $this->getUser()) {
-        throw $this->createAccessDeniedException("Vous ne pouvez pas supprimer ce compte.");
-    }
+        if (!$this->isGranted('ROLE_ADMIN') && $user !== $this->getUser()) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas supprimer ce compte.");
+        }
+        foreach ($user->getAds() as $ad) {
+            $entityManager->remove($ad);
+        }
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
         }
 
         if ($user === $this->getUser()) {
-        $request->getSession()->invalidate();
-        $this->container->get('security.token_storage')->setToken(null);
-        return $this->redirectToRoute('app_ad_index'); 
+            $request->getSession()->invalidate();
+            $this->container->get('security.token_storage')->setToken(null);
+            return $this->redirectToRoute('app_ad_index'); 
          }                     
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }

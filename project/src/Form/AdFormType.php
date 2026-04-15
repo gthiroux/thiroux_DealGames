@@ -15,27 +15,25 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class AdFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+  public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType ::class, ['label'=> "Nom de l'annonce"])
-            ->add('description', TextType ::class, ['label'=> 'Description'])
-            ->add('imageFile', VichImageType::class, [
-            'required' => false,
-            'allow_delete' => true,
-            'delete_label' => '...',
-            'asset_helper' => true,
-        ])
-            // ->add('publicated_date')
+            ->add('title')
+            ->add('description')
+            ->add('imageName')
+            ->add('imageSize')
+            ->add('updatedAt', null, [
+                'widget' => 'single_text',
+            ])
+            ->add('publicated_date')
             ->add('category', EntityType::class, [
                 'class' => Category::class,
-                'choice_label' => 'name',
+                'choice_label' => 'id',
             ])
-            // ->add('user', EntityType::class, [
-            //     'class' => User::class,
-            //     'choice_label' => 'id',
-            // ])
-            ->add('save',SubmitType::class)
+            ->add('user', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'id',
+            ])
         ;
     }
 
