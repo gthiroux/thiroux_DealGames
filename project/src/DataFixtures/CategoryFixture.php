@@ -11,11 +11,11 @@ class CategoryFixture extends Fixture
     {
         $categories=['Console','Jeux','Accessoires'];
 
-        foreach ($categories as $name) {
+        foreach ($categories as $key=>$name) {
             $category = new Category();
             $category->setName($name);
             $manager->persist($category);
-            
+           $this->addReference('category_' . $key, $category);
         }
 
         $manager->flush();
