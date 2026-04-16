@@ -1,0 +1,14 @@
+<nav>
+	<p class="nav-logo">Deal<span>Games</span>
+	</p>
+	<ul class="nav-links">
+		<li>
+			<a href="{{ path('app_ad_index') }}" class="{{ app.request.attributes.get('_route') == 'app_ad_index' ? 'active' }}">
+				Accueil</a>
+			<a href="{{ path('app_user_index') }}" class="{{ app.request.attributes.get('_route') == 'app_user_index' ? 'active' }}">
+				Profil
+			</a>
+		</li>
+
+	</ul>
+</nav>

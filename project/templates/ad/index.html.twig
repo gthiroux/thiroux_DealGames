@@ -3,7 +3,7 @@
 {% block title %}Acceuil
 {% endblock %}
 
-{% block body %}
+{% block content %}
 	<h1>Liste des annonces</h1>
 
 	{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
@@ -15,42 +15,48 @@
 	<table class="table">
 		<thead>
 			<tr>
+				<th></th>
 				<th>Title</th>
 				<th>Description</th>
-				<th>Authore</th>
-				{# <th>ImageName</th>#}
-			{#<th>ImageSize</th>#}
-				{#<th>UpdatedAt</th> #}
+				<th>Auteur</th>
+				<th>Date de publication</th>
+				<th></th>
 
 			</tr>
 		</thead>
-	</tr>
-</thead>
-<tbody>
-	{% for ad in ads %}
-		<tr>
-			<td>{{ ad.title }}</td>
-			<td>{{ ad.description }}</td>
-			<td>{{ [ad.user.lastname ,ad.user.firstname] | join(" ")}}</td>
-			{# <td>{{ ad.imageName }}</td> #}
-			{# <td>{{ ad.imageSize }}</td> #}
-			{# <td>{{ ad.updatedAt ? ad.updatedAt|date('Y-m-d H:i:s') : '' }}</td> #}
-				<td>
-			{{ ad.publicatedDate ? ad.publicatedDate|date('Y-m-d') : '' }}
-			</td>
-				<td>
-					<a href="{{ path('app_ad_show', {'id': ad.id}) }}"> show</a>
-			</td>
-			{% if is_granted('ROLE_ADMIN') or (app.user and ad.user == app.user) %}
 
-				<td>
-					<a href="{{ path('app_ad_edit', {'id': ad.id}) }}">edit</a>
-				</td>
-			{% endif %}
-		</tr>
-	{% else %}
-		<tr>
-			<td colspan="8">no records found</td>
-		</tr>
-	{% endfor %}
-</tbody></tbody></table><a href="{{ path('app_ad_new') }}">Create new</a>{% endblock %}
+		<tbody>
+			{% for ad in ads %}
+				<tr>
+					<td>
+						{% if ad.imageName %}
+							<img src="{{ vich_uploader_asset(ad, 'imageFile') }}" alt="{{ ad.title }}" style="width: 100px; height: auto;">
+						{% else %}
+							<span>Aucune image</span>
+						{% endif %}
+					</td>
+					<td>{{ ad.title }}</td>
+					<td>{{ ad.description }}</td>
+					<td>{{ [ad.user.firstname , ad.user.lastname] | join(" ")}}</td>
+					<td>
+						{{ ad.publicatedDate ? ad.publicatedDate|date('d/m/Y') : '' }}
+					</td>
+					<td>
+						<a href="{{ path('app_ad_show', {'id': ad.id}) }}">
+							Voir les détails</a>
+					</td>
+					{% if is_granted('ROLE_ADMIN') or (app.user and ad.user == app.user) %}
+
+						<td>
+							<a href="{{ path('app_ad_edit', {'id': ad.id}) }}">Modifier l'annonce</a>
+						</td>
+					{% endif %}
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="8">Pas encore d'annonce</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</tbody>
+</table>{% endblock %}

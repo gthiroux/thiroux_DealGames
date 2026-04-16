@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-	<h1>Activation de votre compte sur DealGame</h1>
+{% block content %}
+	<h1>Activation de votre compte sur DealGames</h1>
 	<p>Bonjour
 		{{ user.firstname }},</p>
-	<p>Pour activer votre compte sur OpenBlog cliquez sur le lien ci-dessous.</p>
+	<p>Pour activer votre compte sur DealGames cliquez sur le lien ci-dessous.</p>
 	<p>
 		<a href="{{ absolute_url(path('verify_user', {token: token})) }}">Lien</a>
 	</p>

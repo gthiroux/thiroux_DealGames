@@ -29,7 +29,9 @@ final class AdController extends AbstractController
         if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_USER')) {
             throw $this->createAccessDeniedException("Vous devez être connecté pour créer une nouvelle annonce !");
             }
+
         $ad = new Ad();
+        $ad->setUser($this->getUser());
         $form = $this->createForm(AdFormType::class, $ad);
         $form->handleRequest($request);
 

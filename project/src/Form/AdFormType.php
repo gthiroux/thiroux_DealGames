@@ -8,6 +8,7 @@ use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,22 +19,23 @@ class AdFormType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('description')
-            ->add('imageName')
-            ->add('imageSize')
-            ->add('updatedAt', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('publicated_date')
+            ->add('title',TextType::class,['label'=>"Titre de l'annonce"])
+            ->add('description',TextareaType::class,['label'=>"Description"])
+            ->add('imageFile', VichImageType::class, [
+            'required' => false,
+            'download_uri' => true,
+            'image_uri' => true,
+            'allow_delete' => true,
+            'delete_label' => "Supprimer l'image actuelle",
+            'asset_helper' => true,
+            'label'=>'Choisir une image'
+        ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
+                'label'=> "Catégorie",
             ])
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ])
+           
         ;
     }
 

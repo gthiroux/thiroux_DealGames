@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\RegistrationFormType;
 use App\Form\UserType;
 use App\Repository\AdRepository;
 use App\Repository\UserRepository;
@@ -34,7 +35,7 @@ final class UserController extends AbstractController
     }
         
     // * if the usehas a ADMIN's role , he can see all user in database
-    #[IsGranted(new Expression('is_granted("ROLE_ADMIN"))'))]
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN")'))]
     #[Route('/all',name:"app_user_all",methods:['GET'])]
     public function findAllUser(UserRepository $userRepository): Response
     {
@@ -44,12 +45,12 @@ final class UserController extends AbstractController
     }
 
     // * if the user has a ADMIN's role, he can create a new user 
-    #[IsGranted(new Expression('is_granted("ROLE_ADMIN"))'))]
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN")'))]
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -59,18 +60,19 @@ final class UserController extends AbstractController
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
             }
             
-            return $this->render('user/new.html.twig', [
+            return $this->render('registration/register.html.twig', [
                 'user' => $user,
-                'form' => $form,
+                'registrationForm' => $form,
             ]);
     }
     
-    #[IsGranted(new Expression('is_granted("ROLE_ADMIN"))'))]
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN")'))]
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'ads' => $user ->getAds(),
             ]);
     }
             
@@ -81,14 +83,17 @@ final class UserController extends AbstractController
         if (!$this->isGranted('ROLE_ADMIN') && $user != $this->getUser()) {
             throw $this->createAccessDeniedException("Vous ne pouvez pas modifier le profil d'un autre utilisateur.");
         }
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user,['is_admin'=>$this->isGranted('ROLE_ADMIN'),]);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $plainPassword = $form->get('password')->getData();
-    
-            if (!empty($plainPassword)) {
-                $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
+            if ($form->has('password')) {
+                $plainPassword = $form->get('password')->getData();
+        
+                if (!empty($plainPassword)) {
+                    $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
+                }
+                
             }
             $entityManager->flush();
             
@@ -108,15 +113,13 @@ final class UserController extends AbstractController
         if (!$this->isGranted('ROLE_ADMIN') && $user !== $this->getUser()) {
             throw $this->createAccessDeniedException("Vous ne pouvez pas supprimer ce compte.");
         }
-        foreach ($user->getAds() as $ad) {
-            $entityManager->remove($ad);
-        }
+        $isSelf=$user === $this->getUser();
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
         }
 
-        if ($user === $this->getUser()) {
+        if ($isSelf) {
             $request->getSession()->invalidate();
             $this->container->get('security.token_storage')->setToken(null);
             return $this->redirectToRoute('app_ad_index'); 

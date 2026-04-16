@@ -43,7 +43,7 @@ class Ad
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $publicated_date ;
 
-    #[ORM\ManyToOne(inversedBy: 'ads', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'ads')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 

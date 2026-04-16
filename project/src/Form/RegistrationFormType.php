@@ -49,7 +49,7 @@ class RegistrationFormType extends AbstractType
                     ),
                 ],
             ])
-            ->add('register',SubmitType::class)
+            ->add('register',SubmitType::class,['label'=>'Enregistrer'])
 
         ;
     }
