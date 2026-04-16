@@ -2,19 +2,24 @@
 
 {% block title %}Modifier Profil
 {% endblock %}
-
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="{{asset('style/pages/user.css')}}">
+{% endblock %}
 {% block content %}
-	<h1>Profil de
-		{{user.firstname}}
-		{{user.lastname}}</h1>
+	<div class="content">
+		<h1>Profil de
+			{{user.firstname}}
+			{{user.lastname}}</h1>
 
-	<p>{{user.email}}</p>
+		<p>{{user.email}}</p>
 
-	<a href="{{ path('forgotten_password') }}">
-		Changer de mot de passe</a>
-	{{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+		<a href="{{ path('forgotten_password') }}">
+			Changer de mot de passe</a>
+		{{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
 
-	<a href="{{ path('app_user_index') }}">Voir le profil</a>
+		<a href="{{ path('app_user_index') }}">Voir le profil</a>
 
-	{{ include('user/_delete_form.html.twig') }}
+		{{ include('user/_delete_form.html.twig') }}
+	</div>
 {% endblock %}

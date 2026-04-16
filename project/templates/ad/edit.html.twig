@@ -2,14 +2,19 @@
 
 {% block title %}Modifier Annonce
 {% endblock %}
-
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="{{asset('style/pages/ad.css')}}">
+{% endblock %}
 {% block content %}
-	<h1>Modifier l'annonce
-		{{ad.title}}</h1>
+	<div class="content">
+		<h1>Modifier l'annonce
+			{{ad.title}}</h1>
 
-	{{ include('ad/_form.html.twig', {'button_label': 'Update'}) }}
+		{{ include('ad/_form.html.twig', {'button_label': 'Update'}) }}
 
-	<a href="{{ path('app_ad_index') }}">Voir toutes les annonces</a>
+		<a href="{{ path('app_ad_index') }}">Voir toutes les annonces</a>
 
-	{{ include('ad/_delete_form.html.twig') }}
+		{{ include('ad/_delete_form.html.twig') }}
+	</div>
 {% endblock %}

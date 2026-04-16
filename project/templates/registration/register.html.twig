@@ -2,19 +2,24 @@
 
 {% block title %}Création de compte
 {% endblock %}
-
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="{{asset('style/pages/form.css')}}">
+{% endblock %}
 {% block content %}
-	{% for flash_error in app.flashes('verify_email_error') %}
-		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-	{% endfor %}
+	<div class="content">
+		{% for flash_error in app.flashes('verify_email_error') %}
+			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+		{% endfor %}
 
-	<h1>Créez vous un compte</h1>
+		<h1>Créez vous un compte</h1>
 
-	{{ form_errors(registrationForm) }}
+		{{ form_errors(registrationForm) }}
 
-	{{ form_start(registrationForm) }}
-	{{ form_end(registrationForm) }}
-	<p>
-		<a href="{{ path('app_login') }}">Déjà inscrit ? Je me connecte</a>
-	</p>
+		{{ form_start(registrationForm) }}
+		{{ form_end(registrationForm) }}
+		<p>
+			<a href="{{ path('app_login') }}">Déjà inscrit ? Je me connecte</a>
+		</p>
+	</div>
 {% endblock %}

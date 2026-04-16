@@ -2,44 +2,49 @@
 
 {% block title %}Liste Profil
 {% endblock %}
-
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="{{asset('style/pages/user.css')}}">
+{% endblock %}
 {% block content %}
-	<h1>Liste des profils</h1>
-	<a href="{{ path('app_user_new') }}">Créer un nouveau utilisateur</a>
+	<div class="content">
+		<h1>Liste des profils</h1>
+		<a href="{{ path('app_user_new') }}">Créer un nouveau utilisateur</a>
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Nom de famille</th>
-				<th>Prénom</th>
-				<th>Email</th>
-				<th>Roles</th>
-				<th>Date création de compte</th>
-				<th>Verifié ?</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for user in users %}
+		<table class="table">
+			<thead>
 				<tr>
-					<td>{{ user.lastname }}</td>
-					<td>{{ user.firstname }}</td>
-					<td>{{ user.email }}</td>
-					<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-					<td>{{ user.registeredDate ? user.registeredDate|date('d/m/Y') : '' }}</td>
-					<td>{{ user.isVerified ? 'Oui' : 'Non' }}</td>
-					<td>
-						<a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
-						<a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
-					</td>
+					<th>Nom de famille</th>
+					<th>Prénom</th>
+					<th>Email</th>
+					<th>Roles</th>
+					<th>Date création de compte</th>
+					<th>Verifié ?</th>
+					<th></th>
 				</tr>
-			{% else %}
-				<tr>
-					<td colspan="9">Pas d'utilisateurs
-					</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				{% for user in users %}
+					<tr>
+						<td>{{ user.lastname }}</td>
+						<td>{{ user.firstname }}</td>
+						<td>{{ user.email }}</td>
+						<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+						<td>{{ user.registeredDate ? user.registeredDate|date('d/m/Y') : '' }}</td>
+						<td>{{ user.isVerified ? 'Oui' : 'Non' }}</td>
+						<td>
+							<a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
+							<a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="9">Pas d'utilisateurs
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 
 {% endblock %}

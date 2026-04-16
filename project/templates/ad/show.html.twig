@@ -3,48 +3,53 @@
 {% block title %}
 	{{ad.title}}
 {% endblock %}
-
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="{{asset('style/pages/ad.css')}}">
+{% endblock %}
 {% block content %}
-	<h1>Annonce pour
-		{{ad.title}}</h1>
+	<div class="content">
+		<h1>Annonce pour
+			{{ad.title}}</h1>
 
-	<table class="table ad_show">
-		<tbody>
-			<tr>
-				<td>
-					{% if ad.imageName %}
-						<img src="{{ vich_uploader_asset(ad, 'imageFile') }}" alt="{{ ad.title }}" style="width: 100px; height: auto;">
-					{% else %}
-						<span>Aucune image</span>
-					{% endif %}
-				</td>
-			</tr>
-			<tr>
-				<th>Title</th>
-				<td>{{ ad.title }}</td>
-			</tr>
-			<tr>
-				<th>Description</th>
-				<td>{{ ad.description }}</td>
-			</tr>
-			<tr>
-				<th>Date de publication</th>
-				<td>{{ ad.publicatedDate ? ad.publicatedDate|date('d/m/Y') : '' }}</td>
-			</tr>
-			<tr>
-				<th>Auteur de l'annonce</th>
-				<td>{{ [ad.user.firstname , ad.user.lastname] | join(" ")}}</td>
-			</tr>
-		</tbody>
-	</table>
+		<table class="table ad_show">
+			<tbody>
+				<tr>
+					<td>
+						{% if ad.imageName %}
+							<img src="{{ vich_uploader_asset(ad, 'imageFile') }}" alt="{{ ad.title }}" style="width: 100px; height: auto;">
+						{% else %}
+							<span>Aucune image</span>
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<th>Title</th>
+					<td>{{ ad.title }}</td>
+				</tr>
+				<tr>
+					<th>Description</th>
+					<td>{{ ad.description }}</td>
+				</tr>
+				<tr>
+					<th>Date de publication</th>
+					<td>{{ ad.publicatedDate ? ad.publicatedDate|date('d/m/Y') : '' }}</td>
+				</tr>
+				<tr>
+					<th>Auteur de l'annonce</th>
+					<td>{{ [ad.user.firstname , ad.user.lastname] | join(" ")}}</td>
+				</tr>
+			</tbody>
+		</table>
 
-	<a href="{{ path('app_ad_index') }}">Voir toutes les annonces</a>
-	{% if is_granted('ROLE_ADMIN') or (app.user and ad.user == app.user) %}
+		<a href="{{ path('app_ad_index') }}">Voir toutes les annonces</a>
+		{% if is_granted('ROLE_ADMIN') or (app.user and ad.user == app.user) %}
 
-		<td>
-			<a href="{{ path('app_ad_edit', {'id': ad.id}) }}">Modifier l'annonce</a>
-		</td>
-		{{ include('ad/_delete_form.html.twig') }}
-	{% endif %}
+			<td>
+				<a href="{{ path('app_ad_edit', {'id': ad.id}) }}">Modifier l'annonce</a>
+			</td>
+			{{ include('ad/_delete_form.html.twig') }}
+		{% endif %}
+	</div>
 
 {% endblock %}
