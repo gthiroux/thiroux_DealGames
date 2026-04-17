@@ -1,0 +1,382 @@
+.content {
+    width: 80%;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: var(--white);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 16px rgba(55, 75, 74, 0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Titre  */
+.content h1 {
+    font-size: 1.8rem;
+    color: var(--dark_slate);
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid var(--frost_mint);
+    text-align: center;
+}
+
+/* Email (page edit) */
+.content > p {
+    text-align: center;
+    color: var(--granite);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* liens et boutons */
+.content a,
+.content button.btn {
+    min-width: 35%;
+    display: inline-flex;
+    padding: 0.5rem 1.1rem;
+    border-radius: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--white);
+    background-color: var(--green);
+    margin: 0.2rem 0.15rem;
+    transition:
+        background-color 0.2s ease,
+        transform 0.1s ease;
+    border: none;
+    cursor: pointer;
+    justify-content: center;
+}
+
+.content a:hover,
+.content button.btn:hover {
+    background-color: var(--granite);
+    transform: translateY(-1px);
+}
+.btn_actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.btn_list {
+    margin: 1rem !important;
+    background-color: var(--frost_mint) !important;
+    color: var(--green) !important;
+}
+/* Bloc champ (label + input/checkbox) */
+.content form > div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.content form label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--granite);
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.content form input[type="text"],
+.content form input[type="email"],
+.content form input[type="password"],
+.content form select,
+.content form textarea {
+    padding: 0.55rem 0.85rem;
+    border: 1.5px solid var(--frost_mint);
+    border-radius: 0.4rem;
+    font-size: 0.95rem;
+    color: var(--dark_slate);
+    background-color: #fff;
+    transition: border-color 0.2s ease;
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.content form input:focus,
+.content form select:focus,
+.content form textarea:focus {
+    outline: none;
+    border-color: var(--green);
+}
+
+/* Checkbox */
+.content form .form-check,
+.content form ul {
+    list-style: none;
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+}
+
+.content form .form-check-label,
+.content form ul li label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--dark_slate);
+    text-transform: none;
+    letter-spacing: 0;
+    cursor: pointer;
+}
+
+.content form input[type="checkbox"] {
+    accent-color: var(--green);
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+}
+.content form .form-check {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+/* Bouton submit du form */
+.content form button.btn {
+    margin-top: 0.5rem;
+    width: 100%;
+    padding: 0.65rem;
+    font-size: 1rem;
+}
+
+/* Section : Changer MDP + Voir profil */
+.content > a {
+    display: block;
+    text-align: center;
+    margin-top: 0.75rem;
+}
+
+/* Supprimer le compte */
+.content form[action*="delete"] {
+    display: block;
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+    border-top: 1.5px dashed #e0b0b0;
+}
+
+.content form[action*="delete"] button.btn {
+    width: 100%;
+    background-color: transparent;
+    color: #b94a4a;
+    border: 1.5px solid #b94a4a;
+    font-weight: 600;
+}
+
+.content form[action*="delete"] button.btn:hover {
+    background-color: #b94a4a;
+    color: var(--white);
+    transform: translateY(-1px);
+}
+
+/* Table principale */
+.table {
+    width: 100%;
+    margin: 1rem;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    table-layout: fixed;
+}
+
+.table thead {
+    width: 100%;
+    background-color: var(--dark_slate);
+    color: var(--frost_mint);
+}
+
+.table thead th {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+
+.table td:first-child {
+    width: 100px;
+    text-align: center;
+}
+.table tbody tr {
+    border-bottom: 1px solid var(--frost_mint);
+    transition: background-color 0.15s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #edf6ea;
+}
+
+.table tbody td,
+.table tbody th {
+    padding: 0.75rem 1rem;
+    color: var(--dark_slate);
+    vertical-align: middle;
+}
+
+.table tbody th {
+    color: var(--granite);
+    font-weight: 600;
+    width: 35%;
+}
+
+.table tbody td[colspan] {
+    text-align: center;
+    color: var(--granite);
+    padding: 2rem;
+    font-style: italic;
+}
+/*  images */
+.table img,
+.ad_show img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 0.4rem;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Table annonces (.ad_table) */
+.ad_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.25rem 0;
+    border: 1px solid var(--frost_mint);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    font-size: 0.95rem;
+}
+
+.ad_table tr {
+    border-bottom: 1px solid var(--frost_mint);
+    transition: background-color 0.15s ease;
+}
+
+.ad_table tr:last-child {
+    border-bottom: none;
+}
+
+.ad_table tr:hover {
+    background-color: #edf6ea;
+}
+
+.ad_table td {
+    padding: 0.75rem 1rem;
+    color: var(--dark_slate);
+    vertical-align: middle;
+}
+
+.ad_table td:first-child {
+    font-weight: 600;
+    color: var(--green);
+}
+
+.ad_table td:last-child {
+    text-align: right;
+}
+
+/* ---------- RESPONSIVE DESIGN ---------- */
+
+/* Tablettes et mobiles larges */
+@media (max-width: 992px) {
+    .content {
+        width: 90%;
+        padding: 1.5rem;
+    }
+
+    .table tbody th {
+        width: 40%;
+    }
+}
+
+/* Mobiles (Smartphones) */
+@media (max-width: 768px) {
+    .content {
+        width: 95%;
+        margin: 1rem auto;
+        padding: 1rem;
+    }
+
+    .content h1 {
+        font-size: 1.5rem;
+    }
+
+    .content a,
+    .content button.btn {
+        min-width: 80%;
+        margin: 0.5rem 0;
+    }
+
+    .table thead {
+        display: none;
+    }
+
+    .table,
+    .table tbody,
+    .table tr,
+    .table td {
+        display: block;
+        width: 100% !important;
+    }
+
+    .table tr {
+        margin-bottom: 1.5rem;
+        border: 1px solid var(--frost_mint);
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .table td {
+        text-align: right;
+        padding: 0.5rem 1rem;
+        position: relative;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .table td:last-child {
+        border-bottom: none;
+    }
+
+    .table td::before {
+        position: absolute;
+        left: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        color: var(--granite);
+    }
+
+    .table td:first-child {
+        width: 100% !important;
+        text-align: center;
+        background-color: #f9f9f9;
+        border-radius: 0.4rem;
+    }
+
+    .content form > div {
+        gap: 0.5rem;
+    }
+}
+
+/* Très petits écrans */
+@media (max-width: 480px) {
+    .content h1 {
+        font-size: 1.3rem;
+    }
+
+    .btn_actions {
+        flex-direction: column;
+        width: 100%;
+    }
+}

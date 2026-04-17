@@ -4,7 +4,7 @@
 {% endblock %}
 {% block stylesheets %}
 	{{parent()}}
-	<link rel="stylesheet" href="{{asset('style/pages/user.css')}}">
+	<link rel="stylesheet" href="{{asset('style/pages/global.css')}}">
 {% endblock %}
 
 {% block content %}
@@ -36,8 +36,6 @@
 			</tbody>
 		</table>
 		{% if ads is not empty %}
-
-
 			<table class="ad_table">
 				{% for ad in ads %}
 					<tr>
@@ -54,12 +52,16 @@
 				{% endfor %}
 			</table>
 		{% endif %}
-
-		<a href="{{ path('app_user_edit', {'id': user.id}) }}">Mofidier le profil</a>
-		{{ include('user/_delete_form.html.twig') }}
+		<div class="btn_actions">
+			<a href="{{ path('app_user_edit', {'id': user.id}) }} " class="btn">Mofidier le profil</a>
+			{{ include('user/_delete_form.html.twig') }}
+		</div>
+		{% if is_granted('ROLE_ADMIN') %}
+			<a href="{{ path('app_user_all') }}" class="btn btn_list">Voir tous les profils</a>
+		{% endif %}
 		{% if (app.user and user == app.user) %}
 
-			<a href="{{ path('app_logout') }}">Déconnexion</a>
+			<a href="{{ path('app_logout') }}" class="btn">Déconnexion</a>
 		{% endif %}
 	</div>
 

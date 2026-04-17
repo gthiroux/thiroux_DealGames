@@ -23,14 +23,7 @@ class RegistrationFormType extends AbstractType
             ->add('firstname', TextType ::class, ['label'=> 'Prénom'])
             ->add('lastname', TextType ::class, ['label'=> 'Nom de famille'])
             ->add('email', TextType ::class, ['label'=> 'Email'])
-            // ->add('agreeTerms', CheckboxType::class, [
-            //     'mapped' => false,
-            //     'constraints' => [
-            //         new IsTrue(
-            //             message: 'You should agree to our terms.',
-            //         ),
-            //     ],
-            // ])
+            
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -49,7 +42,7 @@ class RegistrationFormType extends AbstractType
                     ),
                 ],
             ])
-            ->add('register',SubmitType::class,['label'=>'Enregistrer'])
+            // ->add('register',SubmitType::class,['label'=>'Enregistrer'])
 
         ;
     }

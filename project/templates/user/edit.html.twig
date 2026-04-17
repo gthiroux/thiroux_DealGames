@@ -4,7 +4,7 @@
 {% endblock %}
 {% block stylesheets %}
 	{{parent()}}
-	<link rel="stylesheet" href="{{asset('style/pages/user.css')}}">
+	<link rel="stylesheet" href="{{asset('style/pages/global.css')}}">
 {% endblock %}
 {% block content %}
 	<div class="content">
@@ -12,13 +12,14 @@
 			{{user.firstname}}
 			{{user.lastname}}</h1>
 
-		<p>{{user.email}}</p>
+		<p>Email :
+			{{user.email}}</p>
 
-		<a href="{{ path('forgotten_password') }}">
+
+		<a href="{{ path('forgotten_password') }}" class="btn">
 			Changer de mot de passe</a>
 		{{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
 
-		<a href="{{ path('app_user_index') }}">Voir le profil</a>
 
 		{{ include('user/_delete_form.html.twig') }}
 	</div>
